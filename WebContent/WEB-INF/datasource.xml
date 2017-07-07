@@ -1,0 +1,106 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+ xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+ xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+ xmlns:task="http://www.springframework.org/schema/task"
+ xsi:schemaLocation="
+   http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+   http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+   http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+   http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+   http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+
+<!-- Type1 -->
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName"  value="com.ibm.db2.jcc.DB2Driver"></property>
+		<property name="url" value="jdbc:db2://192.168.1.6:50000/workout"></property>
+		<property name="username" value="db2inst1"></property>
+		<property name="password" value="123456"></property>
+	</bean>
+	
+	<bean id="sqlDataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	<property name="driverClassName"  value="com.ibm.db2.jcc.DB2Driver"></property>
+		<property name="url" value="jdbc:db2://192.168.1.6:50000/workout"></property>
+		<property name="username" value="db2inst1"></property>
+		<property name="password" value="123456"></property>
+	</bean>
+	
+	<jee:jndi-lookup id="database" jndi-name="java:/MySqlDS"/>
+	
+	<bean id="mysessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>com/bean/User.hbm.xml</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.DB2Dialect</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.transaction.factory_class">org.hibernate.transaction.JTATransactionFactory</prop>
+				<prop key="hibernate.transaction.manager_lookup_class">org.hibernate.transaction.JBossTransactionManagerLookup</prop>               			
+			</props>
+		</property>
+	</bean>	
+
+	<bean id="d" class="com.dao.util.SpringintegrationHibernateUtil">
+	<property name="sessionFactory" ref="mysessionFactory"></property>
+	</bean>
+
+
+
+
+    
+    <!-- Type2 -->
+      
+<!-- <tx:annotation-driven/> -->
+<!-- <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager"> -->
+<!--     <property name="dataSource" ref="dataSource" /> -->
+<!--     <property name="sessionFactory" ref="mysessionFactory" /> -->
+<!-- </bean> -->
+<!-- <jee:jndi-lookup id="transactionManager" jndi-name="java:/TransactionManager"/> -->  
+<!--   <tx:annotation-driven transaction-manager="transactionManager" /> -->
+
+
+<!-- Type3 -->
+
+
+
+
+
+
+<!--  <tx:annotation-driven /> -->
+
+<!--
+    <jee:jndi-lookup id="entityManagerFactory" jndi-name="java:/BankAppPU"/>
+-->
+
+
+<!--  <bean id="entityManagerFactory" -->
+<!--   class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"> -->
+<!--   <property name="persistenceUnitName" value="MyPersistenceUnit" /> -->
+<!--  </bean> -->
+
+<!--  <bean id="transactionManager" -->
+<!--   class="org.springframework.transaction.jta.JtaTransactionManager"> -->
+<!--   <property name="transactionManagerName" value="java:/TransactionManager" /> -->
+<!--   <property name="userTransactionName" value="UserTransaction" /> -->
+<!--  </bean> -->
+	
+<!-- 	<bean id="accountHolderDAO" class="com.dao.AccountHolderDAO"> -->
+<!--         <property name="emf" ref="entityManagerFactory"/> -->
+<!--     </bean> -->
+	
+	
+	</beans>
+	
+	
+	

@@ -1,0 +1,21 @@
+<hibernate-configuration xmlns="urn:jboss:hibernate-deployer:1.0">
+	<session-factory name="java:/hibernate/SessionFactory"
+		bean="jboss.test.har:service=Hibernate">
+		<property name="datasourceName">java:/MySqlDS</property>
+		<property name="dialect">org.hibernate.dialect.DB2Dialect</property>
+		<property name="hibernate.cache.use_second_level_cache">false</property>
+		<property name="hibernate.cache.use_query_cache">false</property>		
+		<property name="hibernate.connection.charSet">UTF-8</property>
+		<property name="hibernate.connection.pool_size">10</property>		
+		<property name="hibernate.show_sql">true</property>	
+		<property name="hibernate.hbm2ddl.auto">update</property>
+
+		
+		<depends>jboss:service=Naming</depends>
+		<depends>jboss:service=TransactionManager</depends>
+	</session-factory>
+</hibernate-configuration>
+
+
+
+

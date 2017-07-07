@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+        <class name="com.bean.User" table="user" lazy="true">        		
+                <id name="userId" type="integer" column="userId" length="11">
+                        <generator class="native" />
+                </id>               
+                <property name="registeredDate" type="java.util.Date" column="registeredDate" />                       
+                <property name="username" type="string" column="username" length="255" />                
+                <property name="email" type="string" column="email" length="255" />
+                <property name="password" type="string" column="password" length="40" />
+                <property name="country" type="string" column="country" length="2" />
+                <property name="phone" type="string" column="phone" length="255" />                                
+                <property name="sex" type="string" column="sex" length="1" />
+                <property name="userrole" type="string" column="USER_ROLE"/>     
+        </class>
+</hibernate-mapping>

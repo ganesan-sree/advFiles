@@ -1,0 +1,73 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+  xmlns:beans="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+           http://www.springframework.org/schema/security
+           http://www.springframework.org/schema/security/spring-security-3.0.xsd">
+
+
+	<http auto-config="true" use-expressions="true">
+		<intercept-url pattern="/security" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
+		<intercept-url pattern="/admin*" access="hasAnyRole('ROLE_ADMIN')" />	
+		
+			
+		<form-login login-page="/login" default-target-url="/security" 
+			authentication-failure-url="/loginfailed" />
+			
+		<logout logout-success-url="/logout" />
+		
+	<intercept-url pattern="/resources/**" access="permitAll" />
+	
+		
+		
+<!-- 		<access-denied-handler error-page="404"/>		 -->
+	</http>
+	
+	
+	<!-- Type -I  xml authentication-->
+
+	<authentication-manager>
+		<authentication-provider>
+			<user-service>
+				<user name="ganesan" password="bbbbbb" authorities="ROLE_USER" />
+				<user name="easymed" password="bbbbbb" authorities="ROLE_USER" />
+				<user name="admin" password="admin" authorities="ROLE_ADMIN" />
+			</user-service>
+		</authentication-provider>
+	</authentication-manager>
+	
+
+	 <beans:bean id="authdao" class="com.dao.AuthDao" />
+
+	 
+	<beans:bean id="userService" class="com.security.UserLoginService">
+<!-- 	<beans:property name="authdao" ref="authdao"></beans:property> -->
+	</beans:bean>	        	
+	
+	<beans:bean class="org.springframework.security.authentication.encoding.ShaPasswordEncoder" id="passwordEncoderSHA"/>
+	<beans:bean class="org.springframework.security.authentication.encoding.Md5PasswordEncoder" id="passwordEncoderMD5"/>
+	
+	<!-- TYPE-II userDetailService  -->     
+	
+<!-- 	 <authentication-manager> -->
+<!-- 	         <authentication-provider user-service-ref="userService">	  -->
+<!-- 	         <password-encoder hash="md5" />            -->
+<!-- 	         </authentication-provider>        -->
+<!-- 	    </authentication-manager> -->
+	
+	<!-- TYPE -III PreparedStatement -->
+	
+<!-- 	<authentication-manager> -->
+<!-- 	   <authentication-provider> -->
+<!-- 	     <password-encoder ref="passwordEncoderMD5" />         -->
+<!-- 		<jdbc-user-service data-source-ref="dataSource"    -->
+<!-- 		   users-by-username-query="select username,password,'' from user where username=?"   -->
+<!-- 		   authorities-by-username-query="select u.username, u.user_role from user u where u.username=?" /> -->
+<!-- 	   </authentication-provider> -->
+<!-- 	</authentication-manager> -->
+	
+
+</beans:beans>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>spring</display-name>
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  
+  
+
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>		
+<!-- 			/WEB-INF/security-dispatcher-servlet.xml, -->
+			/WEB-INF/spring-security-data.xml
+			<!-- Below applicationContext.xm should be mention for initiating,otherwise it wont start 
+			(its applicable only when we use context-param 'contextConfigLocation' )-->
+			/WEB-INF/applicationContext.xml 
+<!-- 			/WEB-INF/spring-acl-security.xml -->
+		</param-value>
+	</context-param>
+	
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+  
+      <!-- Spring Security 
+    http://192.168.1.230:8080/spring/login
+    http://192.168.1.230:8080/spring/admin
+    http://192.168.1.230:8080/spring/j_spring_security_check
+    http://192.168.1.230:8080/spring/j_spring_security_logout
+    -->
+  
+  	<servlet>
+		<servlet-name>spring-security-dispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>spring-security-dispatcher</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+  
+  
+  
+  <!-- http://192.168.1.230:8080/spring/ganesan/welcome.htm ,http://192.168.1.230:8080/spring/ganesan//process1111.htm
+  ,http://192.168.1.230:8080/spring/ganesan//userRegistration.htm-->
+  <servlet>
+    <servlet-name>ganesan</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ganesan</servlet-name>
+    <url-pattern>/ganesan/*</url-pattern>
+  </servlet-mapping>
+  
+  <!-- http://192.168.1.230:8080/spring/ann/customer/ -->
+   <servlet>
+    <servlet-name>ganesan-annotation</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ganesan-annotation</servlet-name>
+    <url-pattern>/f/*</url-pattern>
+  </servlet-mapping>
+  
+ 
+
+
+	<error-page>
+		<error-code>403</error-code>
+		<location>/403.jsp</location>
+	</error-page>
+  
+  
+  <welcome-file-list>
+    <welcome-file>redirect.jsp</welcome-file>
+  </welcome-file-list>
+  
+</web-app>

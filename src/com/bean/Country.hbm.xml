@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.bean.Country" table="country">
+	<cache usage="read-only"/>
+		<id name="iso3166" type="string" column="iso3166">
+			<generator class="assigned"/>
+		</id>
+		<property name="phoneCode" type="string" column="phoneCode"/>
+		<property name="name" type="string" column="name"/>
+		<property name="lang" type="string" column="lang"/>
+		<property name="valid" type="integer" column="valid"/>
+		<property name="GMT" type="string" column="GMT"/>
+		<property name="currency" type="string" column="currency"/>
+		<property name="mobileConnector" type="string" column="mobileConnector"/>
+		<property name="smsNumber" type="string" column="smsNumber"/>
+	</class>
+</hibernate-mapping>
